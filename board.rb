@@ -54,11 +54,11 @@ class Board
   end
 
   def display
-    puts " abcdefgh"
+    puts "  a b c d e f g h "
     @grid.reverse.each_with_index do |row, row_idx|
       print SIZE - row_idx
       row.each do |square|
-        print square ? square.to_s : "▢"
+        print " " + (square ? square.to_s : "▢")
       end
       puts
     end
@@ -120,8 +120,20 @@ class Board
     end
   end
 
+  def stalemate?
+     if pieces(:white).all? { |piece| piece.valid_moves.empty? }
+       true
+     elsif pieces(:black).all? { |piece| piece.valid_moves.empty? }
+       true
+     elsif @grid.flatten.compact.all? { |piece| piece.is_a?(King) }
+       true
+     else
+       false
+     end
+  end
+
   def over?
-    checkmate?(:white) || checkmate?(:black)
+    checkmate?(:white) || checkmate?(:black) || stalemate?
   end
 
   def pieces(color)

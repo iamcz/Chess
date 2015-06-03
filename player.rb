@@ -60,20 +60,24 @@ class ComputerPlayer < Player
 end
 
 class SuperComputerPlayer < ComputerPlayer
-
-  PIECE_VALUES ={
-    Pawn => 1,
-    Bishop => 3,
-    Knight => 3,
-    Rook => 5,
-    Queen => 9
-  }
+  require_relative 'board_node'
 
   def initialize(color, board)
     super
   end
 
   def get_move
+    root_node = BoardNode.new(@board, @color)
+    # Non-optimal solution:
+    # best_child = root_node.best_children(@color).sample
+    # best_child.prev_move
+    checkmate_moves = root_node.checkmate_children
+    if checkmate_moves.count > 0
+      return checkmate_moves.sample.prev_move
+    end
+
+    best_child, score = root_node.deep_search(@color)
+    best_child.prev_move
 
   end
 

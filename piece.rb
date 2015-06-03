@@ -110,6 +110,7 @@ class Pawn < Piece
     @sides.each do |sx, sy|
       other_color = Piece.other_color(@color)
       move = [x + dx + sx, y + dy + sy]
+      next unless Board.valid_pos?(move)
       if @board.occupied_by?(other_color, move)
         moves << move
       end

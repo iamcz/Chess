@@ -28,6 +28,8 @@ class ChessGame
       puts "Black wins!"
     elsif @board.checkmate?(:black)
       puts "White wins!"
+    elsif @board.stalemate?
+      puts "The game ended in a stalemate!"
     end
   end
 
