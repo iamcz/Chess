@@ -24,7 +24,10 @@ class HumanPlayer
     move_arr.map do |str|
       row = str[1].to_i - 1
       col = COLS[str[0]]
-      raise IllegalInputError unless [row, col].all?{ |x| x.between?(0, 7)}
+
+      raise IllegalInputError unless [row, col].all? do |idx| 
+        idx.between?(0, 7)
+      end
 
       [row, col]
     end

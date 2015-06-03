@@ -1,5 +1,17 @@
-require 'byebug'
+require_relative 'piece'
+
 class Board
+
+  # PIECES = [
+  #   Rook,
+  #   Knight,
+  #   Bishop,
+  #   Queen,
+  #   King,
+  #   Bishop,
+  #   Knight,
+  #   Rook
+  # ]
 
   SIZE = 8
 
@@ -21,6 +33,9 @@ class Board
     end
 
     [[0, :white], [SIZE - 1, :black]].each do |row, color|
+      # PIECES.each_with_index do |piece, col|
+      #   self[[row, col]] = piece.new(self, color)
+      # end
       self[[row, 0]] = Rook.new(self, color)
       self[[row, 1]] = Knight.new(self, color)
       self[[row, 2]] = Bishop.new(self, color)
@@ -102,7 +117,7 @@ class Board
       piece.is_a?(King)
     end
 
-    other_color = (color == :white) ? :black : :white
+    other_color = Piece.other_color(color)
 
     pieces(other_color).any? do |piece|
       piece.moves.include?(king.pos)
@@ -111,7 +126,6 @@ class Board
 
   def checkmate?(color)
     in_check?(color) && pieces(color).all? do |piece|
-      #debugger
       piece.valid_moves.empty?
     end
   end

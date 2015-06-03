@@ -2,7 +2,14 @@
 require_relative 'board'
 require 'byebug'
 
+
 class Piece
+
+  COLORS = [:black, :white]
+
+  def self.other_color(color)
+    COLORS.find { |other_color| other_color != color }
+  end
 
   attr_reader :color
   attr_accessor :pos
@@ -104,7 +111,7 @@ class Pawn < Piece
     moves << move unless @board[move]
 
     @sides.each do |sx, sy|
-      other_color = (@color == :white) ? :black : :white
+      other_color = Piece.other_color(@color)
       move = [x + dx + sx, y + dy + sy]
       if @board.occupied_by?(other_color, move)
         moves << move
@@ -123,8 +130,14 @@ class Pawn < Piece
 
   def first_move?
     x, y = @pos
-    (@color == :white && x == 1) ||
-      (@color == :black && x == Board::SIZE - 2)
+
+    if (@color == :white && x == 1)
+      false
+    elsif (@color == :black && x == Board::SIZE - 2)
+      false
+    else
+      true
+    end
   end
 
   def to_s

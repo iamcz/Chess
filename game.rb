@@ -30,7 +30,9 @@ class ChessGame
   def turn
     begin
       start_pos, final_pos = @current_player.get_move
-      if @board[start_pos] && @board[start_pos].color != @current_player.color
+
+      other_color = Piece.other_color(@current_player.color)
+      if @board.occupied_by?(other_color, start_pos)
         raise WrongColorError
       end
 
