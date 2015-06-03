@@ -30,8 +30,7 @@ class ChessGame
   def turn
     begin
       start_pos, final_pos = @current_player.get_move
-
-      unless @board[start_pos].color == @current_player.color
+      if @board[start_pos] && @board[start_pos].color != @current_player.color
         raise WrongColorError
       end
 
@@ -56,7 +55,13 @@ end
 
 class WrongColorError < ChessError
   def message
-    "You cannot move that piece!"
+    "That is not your piece to move!"
+  end
+end
+
+class IllegalInputError < ChessError
+  def message
+    "Enter input in the correct format."
   end
 end
 

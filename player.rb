@@ -19,10 +19,14 @@ class HumanPlayer
   end
 
   def get_move
-    print "What is your move? "
+    print "What is your move (eg. f2,f3)? "
     move_arr = gets.chomp.split(",")
     move_arr.map do |str|
-      [str[1].to_i - 1, COLS[str[0]]]
+      row = str[1].to_i - 1
+      col = COLS[str[0]]
+      raise IllegalInputError unless [row, col].all?{ |x| x.between?(0, 7)}
+
+      [row, col]
     end
   end
 

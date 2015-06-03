@@ -49,7 +49,9 @@ class Board
   end
 
   def display
-    @grid.reverse.each do |row|
+    puts " abcdefgh"
+    @grid.reverse.each_with_index do |row, row_idx|
+      print SIZE - row_idx
       row.each do |square|
         print square ? square.to_s : "▢"
       end
