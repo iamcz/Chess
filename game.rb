@@ -1,18 +1,22 @@
-require_relative 'piece'
-require_relative 'board'
-require_relative 'player'
-
 class ChessGame
 
-  def initialize(white_player, black_player)
+  def self.new_board
+    board = Board.new
+    board.set_up
+
+    board
+  end
+
+  attr_reader :board
+
+  def initialize(white_player, black_player, board = ChessGame.new_board)
     @white_player = white_player
     @black_player = black_player
     @current_player = white_player
-    @board = Board.new
+    @board = board
   end
 
   def play
-    @board.set_up
     @board.display
 
     until @board.over?
@@ -65,10 +69,4 @@ class IllegalInputError < ChessError
   def message
     "Enter input in the correct format."
   end
-end
-
-if $PROGRAM_NAME == __FILE__
-  p1 = HumanPlayer.new(:white)
-  p2 = HumanPlayer.new(:black)
-  ChessGame.new(p1, p2).play
 end

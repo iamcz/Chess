@@ -1,7 +1,4 @@
 #encoding: utf-8
-require_relative 'board'
-require 'byebug'
-
 
 class Piece
 
@@ -132,11 +129,11 @@ class Pawn < Piece
     x, y = @pos
 
     if (@color == :white && x == 1)
-      false
-    elsif (@color == :black && x == Board::SIZE - 2)
-      false
-    else
       true
+    elsif (@color == :black && x == Board::SIZE - 2)
+      true
+    else
+      false
     end
   end
 

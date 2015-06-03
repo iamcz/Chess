@@ -1,17 +1,15 @@
-require_relative 'piece'
-
 class Board
 
-  # PIECES = [
-  #   Rook,
-  #   Knight,
-  #   Bishop,
-  #   Queen,
-  #   King,
-  #   Bishop,
-  #   Knight,
-  #   Rook
-  # ]
+  PIECES = [
+    Rook,
+    Knight,
+    Bishop,
+    Queen,
+    King,
+    Bishop,
+    Knight,
+    Rook
+  ]
 
   SIZE = 8
 
@@ -33,17 +31,9 @@ class Board
     end
 
     [[0, :white], [SIZE - 1, :black]].each do |row, color|
-      # PIECES.each_with_index do |piece, col|
-      #   self[[row, col]] = piece.new(self, color)
-      # end
-      self[[row, 0]] = Rook.new(self, color)
-      self[[row, 1]] = Knight.new(self, color)
-      self[[row, 2]] = Bishop.new(self, color)
-      self[[row, 3]] = Queen.new(self, color)
-      self[[row, 4]] = King.new(self, color)
-      self[[row, 5]] = Bishop.new(self, color)
-      self[[row, 6]] = Knight.new(self, color)
-      self[[row, 7]] = Rook.new(self, color)
+      PIECES.each_with_index do |piece, col|
+        self[[row, col]] = piece.new(self, color)
+      end
     end
 
     nil
@@ -134,7 +124,6 @@ class Board
     checkmate?(:white) || checkmate?(:black)
   end
 
-  private
   def pieces(color)
     @grid.flatten.compact.select { |square| square.color == color }
   end
